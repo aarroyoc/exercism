@@ -1,0 +1,26 @@
+;;; space-age.el --- Space Age (exercism)  -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;;; Code:
+
+(defconst *orbital-period-related-to-earth* '(
+                                              (:earth . 1.0)
+                                              (:mercury . 0.2408467)
+                                              (:venus . 0.61519726)
+                                              (:mars . 1.8808158)
+                                              (:jupiter . 11.862615)
+                                              (:saturn . 29.447498)
+                                              (:uranus . 84.016846)
+                                              (:neptune . 164.79132)))
+(defconst *earth-year-in-seconds* 31557600)
+
+(defun age (planet seconds)
+  (/
+   seconds
+   (* *earth-year-in-seconds* (cdr (assoc planet *orbital-period-related-to-earth*)))))
+
+
+(provide 'space-age)
+;;; space-age.el ends here
+
