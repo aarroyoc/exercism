@@ -1,0 +1,43 @@
+# | Register | Usage     | Type    | Purpose                    |
+# | -------- | --------- | ------- | -------------------------- |
+# | `$a0`    | input     | integer | given value                |
+# | `$v0`    | output    | integer | difference of squares      |
+# | `$t0-9`  | temporary | any     | used for temporary storage |
+
+.globl difference_of_squares
+
+difference_of_squares:
+  sw $ra, -4($sp)
+  jal square_of_sum
+  move $t0, $v0
+  jal sum_of_square
+  sub $v0, $t0, $v0
+  lw $ra, -4($sp)
+  jr $ra
+
+square_of_sum:
+  move $t1, $a0
+  addi $v0, $zero, 0
+ls1:
+  beq $t1, $zero, es1
+  add $v0, $v0, $t1
+  addi $t1, $t1, -1
+  b ls1
+es1:
+  mult $v0, $v0
+  mflo $v0
+  jr $ra
+
+sum_of_square:
+  move $t1, $a0
+  addi $v0, $zero, 0
+ls2:
+  beq $t1, $zero, es2
+  mult $t1, $t1
+  mflo $t2
+  add $v0, $v0, $t2
+  addi $t1, $t1, -1
+  b ls2
+es2:
+  jr $ra
+
