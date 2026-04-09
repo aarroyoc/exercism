@@ -12,7 +12,6 @@ learning_problems = {
     "leslies-lists",
     "logans-numeric-partition",
     "pizza-pi",
-    "strain",
     "key-comparison",
     "socks-and-sexprs",
     "character-study",
@@ -34,7 +33,23 @@ learning_problems = {
     "captains-log",
     "calculator-conundrum",
     "salary-calculator",
-    "tim-from-marketing"
+    "tim-from-marketing",
+    "squeaky-clean",
+    "booking-up-for-beauty",
+    "weather-forecast",
+    "remote-control-competition",
+    "vehicle-purchase",
+    "airport-robot",
+    "gross-store",
+    "election-day",
+    "the-farm",
+    "card-tricks",
+    "lasagna-master",
+    "jedliks-toys",
+    "welcome-to-tech-palace",
+    "animal-magic",
+    "party-robot",
+    "secrets"
 }
 
 class Language:
