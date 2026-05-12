@@ -1,0 +1,38 @@
+# | Register | Usage     | Type    | Description                |
+# | -------- | --------- | ------- | -------------------------- |
+# | `$a0`    | input     | integer | x                          |
+# | `$a1`    | input     | integer | y                          |
+# | `$v0`    | output    | integer | points earned              |
+# | `$t0-9`  | temporary | any     | used for temporary storage |
+
+.globl score
+
+score:
+  mult $a0, $a0
+  mflo $t0
+  mult $a1, $a1
+  mflo $t1
+  add $t0, $t0, $t1
+  addi $t1, $zero, 1 # 1 ^ 2
+  ble $t0, $t1, score_10
+  addi $t1, $zero, 25 # 5 ^ 2
+  ble $t0, $t1, score_5
+  addi $t1, $zero, 100 # 10 ^ 2
+  ble $t0, $t1, score_1
+  addi $v0, $zero, 0
+  b exit
+
+score_10:
+  addi $v0, $zero, 10
+  b exit
+
+score_5:
+  addi $v0, $zero, 5
+  b exit
+
+score_1:
+  addi $v0, $zero, 1
+  b exit
+
+exit:
+  jr $ra
