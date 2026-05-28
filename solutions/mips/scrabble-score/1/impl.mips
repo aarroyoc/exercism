@@ -1,0 +1,78 @@
+# | Register | Usage     | Type    | Description                  |
+# | -------- | --------- | ------- | ---------------------------- |
+# | `$a0`    | input     | address | null-terminated input string |
+# | `$v0`    | output    | integer | scrabble score               |
+# | `$t0-9`  | temporary | any     | for temporary storage        |
+
+.globl scrabble_score
+
+scrabble_score:
+  li $v0, 0
+loop:
+  lb $t0, 0($a0)
+  beq $t0, $zero, exit
+  bge $t0, 97, to_upper
+table_dispatch:
+  beq $t0, 'A', sum_one
+  beq $t0, 'E', sum_one
+  beq $t0, 'I', sum_one
+  beq $t0, 'O', sum_one
+  beq $t0, 'U', sum_one
+  beq $t0, 'L', sum_one
+  beq $t0, 'N', sum_one
+  beq $t0, 'R', sum_one
+  beq $t0, 'S', sum_one
+  beq $t0, 'T', sum_one
+  beq $t0, 'D', sum_two
+  beq $t0, 'G', sum_two
+  beq $t0, 'B', sum_three
+  beq $t0, 'C', sum_three
+  beq $t0, 'M', sum_three
+  beq $t0, 'P', sum_three
+  beq $t0, 'F', sum_four
+  beq $t0, 'H', sum_four
+  beq $t0, 'V', sum_four
+  beq $t0, 'W', sum_four
+  beq $t0, 'Y', sum_four
+  beq $t0, 'K', sum_five
+  beq $t0, 'J', sum_eight
+  beq $t0, 'X', sum_eight
+  beq $t0, 'Q', sum_ten
+  beq $t0, 'Z', sum_ten
+  addi $a0, $a0, 1
+  b loop
+sum_one:
+  addi $v0, $v0, 1
+  addi $a0, $a0, 1
+  b loop
+sum_two:
+  addi $v0, $v0, 2
+  addi $a0, $a0, 1
+  b loop
+sum_three:
+  addi $v0, $v0, 3
+  addi $a0, $a0, 1
+  b loop
+sum_four:
+  addi $v0, $v0, 4
+  addi $a0, $a0, 1
+  b loop
+sum_five:
+  addi $v0, $v0, 5
+  addi $a0, $a0, 1
+  b loop
+sum_eight:
+  addi $v0, $v0, 8
+  addi $a0, $a0, 1
+  b loop
+sum_ten:
+  addi $v0, $v0, 10
+  addi $a0, $a0, 1
+  b loop
+
+to_upper:
+  addi $t0, $t0, -32
+  b table_dispatch
+  
+exit:
+  jr $ra
