@@ -1,0 +1,32 @@
+# | Register | Usage     | Type    | Description                |
+# | -------- | --------- | ------- | -------------------------- |
+# | `$a0`    | input     | integer | radicand                   |
+# | `$v0`    | output    | integer | square root                |
+# | `$t0-9`  | temporary | any     | used for temporary storage |
+
+.globl  square_root
+
+# binary search algorithm
+square_root:
+  li $t0, 0      # lower limit
+  move $t1, $a0    # upper limit
+
+loop:
+  add $t2, $t0, $t1
+  srl $t2, $t2, 1 # mid value
+  mult $t2, $t2
+  mflo $t3        # power
+  beq $t3, $a0, exit
+  bgt $t3, $a0, search_lower
+search_higher:
+  move $t0, $t2
+  addi $t0, $t0, 1
+  b loop
+search_lower:
+  move $t1, $t2
+  addi $t1, $t1, -1
+  b loop
+
+exit:
+  move $v0, $t2
+  jr $ra
