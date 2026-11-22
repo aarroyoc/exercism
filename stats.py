@@ -1,64 +1,21 @@
 from pathlib import Path
 
-# learning problems usually are unique to each language and cannot be
+# unique problems usually are unique to each language and cannot be
 # completed on all languages, do not count or show them
-learning_problems = {
-    "gigasecond-anniversary",
-    "reporting-for-duty",
-    "lucys-magnificent-mapper",
-    "lillys-lasagna-leftovers",
-    "lillys-lasagna",
-    "larrys-winning-checker",
-    "leslies-lists",
-    "logans-numeric-partition",
-    "pizza-pi",
-    "key-comparison",
-    "socks-and-sexprs",
-    "character-study",
-    "pal-picker",
-    "high-scores",
-    "bird-count",
-    "log-line-parser",
-    "high-score-board",
-    "assembly-line",
-    "mixed-juices",
-    "wizards-and-warriors",
-    "karls-languages",
-    "jedliks-toy-car",
-    "international-calling-connoisseur",
-    "elyses-enchantments",
-    "shopping",
-    "lucians-luscious-lasagna",
-    "football-match-reports",
-    "captains-log",
-    "calculator-conundrum",
-    "salary-calculator",
-    "tim-from-marketing",
-    "squeaky-clean",
-    "booking-up-for-beauty",
-    "weather-forecast",
-    "remote-control-competition",
-    "vehicle-purchase",
-    "airport-robot",
-    "gross-store",
-    "election-day",
-    "the-farm",
-    "card-tricks",
-    "lasagna-master",
-    "jedliks-toys",
-    "welcome-to-tech-palace",
-    "animal-magic",
-    "party-robot",
-    "secrets"
-}
+UNIQUE_PROBLEMS = set()
 
 class Language:
     def __init__(self, path):
         self.path = path
         self.name = path.name
-        self.problems = {p.name: 1 for p in path.iterdir() if p.is_dir() and p.name not in learning_problems}
+        self.problems = {p.name: 1 for p in path.iterdir() if p.is_dir() and p.name not in UNIQUE_PROBLEMS}
 
 def main():
+    # initialie unique problems
+    with open("unique-problems.txt") as f:
+        for line in f.readlines():
+            UNIQUE_PROBLEMS.add(line.strip().split(" ")[0])
+
     solutions_p = Path("solutions")
     langs = [Language(p) for p in solutions_p.iterdir() if p.is_dir()]
     all_problems = dict()
